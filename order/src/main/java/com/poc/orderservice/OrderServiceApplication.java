@@ -9,6 +9,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableFeignClients(basePackages = "com.poc.orderservice.feignclient")
 @EnableTransactionManagement
+@ComponentScan(basePackages = {
+        "com.ecom.order",     // your own order service package
+        "com.ecom"      // 👈 include this to scan JwtAuthenticationFilter
+})
 public class OrderServiceApplication {
 
     public static void main(String[] args) {
