@@ -1,0 +1,20 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: Auth-Service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/AuthDB?createDatabaseIfNotExist=true
+    username: root
+    password: "Prajwal@123"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+jwt:
+  secretkey: u8x/Y7EaQx4ZFZc+3Z2rKk7uzXtQTuHT5n7XM3+6y6A=
