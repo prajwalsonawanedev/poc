@@ -14,18 +14,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class OrderSecurityConfig {
 
-    //private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    //private String secretKey = "u8x/Y7EaQx4ZFZc+3Z2rKk7uzXtQTuHT5n7XM3+6y6A=";
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        return http
-//                .csrf(csrf -> csrf.disable())
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/api/user/register", "/api/user/login").permitAll()
-//                        .anyRequest().authenticated()
-//                )
-//                .httpBasic(Customizer.withDefaults())
-//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-//                .build();
-//    }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                .authorizeHttpRequests()
+                .anyRequest().authenticated()
+                .and()
+                .oauth2ResourceServer()
+                .jwt(); // This tells Spring to use JWT only, not UserDetailsService
+
+        return http.build();
+    }
 }
