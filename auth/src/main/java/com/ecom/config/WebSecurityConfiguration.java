@@ -1,10 +1,8 @@
 package com.ecom.config;
 
-import com.ecom.service.impl.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -21,38 +19,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfiguration {
-
-    private final CustomUserDetailsService customUserDetailsService;
-
     private final UserDetailsService userDetailsService;
 
-    private final JWTAuthenticationFilter jwtAuthenticationFilter;
+    // private final JWTAuthenticationFilter jwtAuthenticationFilter;
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
-//        security
-//                .csrf(csrf -> csrf.disable())  // 👈 CSRF MUST BE DISABLED for token-based APIs
-//                .authorizeHttpRequests(request -> request
-//                        .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
-//                        .requestMatchers(HttpMethod.PUT, "/users/**").hasAnyRole("ADMIN")
-//                        .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
-//                        .requestMatchers("/products/**").hasRole("ADMIN")
-//                        .requestMatchers(HttpMethod.GET, "/users/**").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
-//                        .requestMatchers(HttpMethod.GET, "/categories/**").permitAll()
-//                        .requestMatchers("/categories/**").hasRole("ADMIN")
-//                        .requestMatchers(HttpMethod.POST, "/auth/generate-token").permitAll()
-//                        .requestMatchers("/auth/**").authenticated()
-//                        .requestMatchers("/error").permitAll()
-//                        .anyRequest().permitAll()
-//                )
-
-    /// /                .exceptionHandling(ex -> ex.authenticationEntryPoint(entryPoint))
-//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//        return security.build();
-//    }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
@@ -60,13 +30,13 @@ public class WebSecurityConfiguration {
                 .authorizeHttpRequests(
                         request ->
                                 request
-                                        .requestMatchers("/api/user/register", "/api/user/login")
+                                        .requestMatchers("/api/user/register", "/api/user/login", "/api/user/validateStringToken", "/api/user/validateToken")
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated()
                 )
-                .httpBasic(Customizer.withDefaults())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .httpBasic(Customizer.withDefaults());
+//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }

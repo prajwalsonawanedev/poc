@@ -1,6 +1,10 @@
 spring:
   application:
     name: Order-Service
+  security:
+    user:
+      name: admin       # your custom username
+      password: prajwal@123
 
   datasource:
     url: jdbc:mysql://localhost:3306/POC?createDatabaseIfNotExist=true
@@ -16,3 +20,8 @@ spring:
 inventory:
   service:
     url: http://localhost:8081/api/inventory
+
+eureka:
+  client:
+    service-url:
+      defaultZone : http://localhost:8761/eureka
